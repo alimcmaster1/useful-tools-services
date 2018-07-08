@@ -1,0 +1,20 @@
+{
+  "name": "Start on Heroku: Python",
+  "description": "Simple Python flask app",
+  "image": "heroku/python",
+  "repository": "https://github.com/alimcmaster1/useful-tools-services",
+  "keywords": ["python"],
+  "addons": [ "heroku-postgresql" ],
+  "env": {
+    "SECRET_KEY": {
+      "description": "The secret key for the Django application.",
+      "generator": "secret"
+    }
+  },
+  "environments": {
+    "test": {
+      "scripts": {
+      }
+    }
+  }
+}
