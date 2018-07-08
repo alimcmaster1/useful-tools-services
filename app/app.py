@@ -11,4 +11,6 @@ def hello():
 
 if __name__ == '__main__':
     # Heroku defines the port we must use in the "PORT" env variable
-    app.run(debug=True, port=os.environ["PORT"])
+    port = os.environ.get("PORT", 8000)
+    print("Port to use %i".format(port))
+    app.run(debug=True, port=port)
