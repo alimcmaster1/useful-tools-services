@@ -10,8 +10,8 @@ def get_connection():
 
 def create_table():
     create_sql = """CREATE TABLE useful_links( 
-                 group VARCHAR(64) NOT NULL,
-                 name VARCHAR(64) NOT NULL,
+                 item_group VARCHAR(64) NOT NULL,
+                 item_name VARCHAR(64) NOT NULL,
                  links TEXT [] NOT NULL,
                  resource_description TEXT
                  )"""
