@@ -17,7 +17,15 @@ def create_table():
                  )"""
     return create_sql
 
-conn = get_connection().cursor()
-conn.execute(create_table())
-conn.commit()
-conn.close()
+conn = None
+try:
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute(create_table())
+    cur.close()
+    conn.commit()
+except (Exception, psycopg2.DatabaseError) as error:
+    print(error)
+finally:
+    if conn is not None:
+        conn.close()
