@@ -18,6 +18,7 @@ def create_table():
     return create_sql
 
 conn = None
+
 try:
     conn = get_connection()
     cur = conn.cursor()
