@@ -8,7 +8,7 @@ def get_connection():
     return psycopg2.connect(DATABASE_URL, sslmode='require')
 
 
-def create_table():
+def create_table() -> str:
     create_sql = """CREATE TABLE useful_links( 
                  item_group VARCHAR(64) NOT NULL,
                  item_name VARCHAR(64) NOT NULL,
