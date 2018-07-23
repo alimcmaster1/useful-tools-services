@@ -1,13 +1,12 @@
-import json
 import os
 
-import adhocrows as adhoc
 from sqlalchemy import Table, MetaData, String, Column, ARRAY, TEXT, create_engine, select
+from sqlalchemy.engine import ResultProxy
 
 
-class resourceItem(json.JSONEncoder):
+class resourceItem():
 
-    def __init__(self, group, item_name, links, resource_desc):
+    def __init__(self, group: str, item_name: str, links: str, resource_desc: str) -> None:
         self.group = group
         self.item_name = item_name
         self.links = links
@@ -71,7 +70,7 @@ class linksTable():
 
 class dbConnection():
 
-    def __init__(self):
+    def __init__(self) -> None:
         self._engine = create_engine(os.environ["DB_URL"], echo=True)
         self.conn = self._engine.connect()
 
@@ -82,22 +81,16 @@ class dbConnection():
                                                          resource_description=getattr(resourceItem, "resource_desc"))
         return insert
 
-    def gen_delete_sql(self, resourceItem):
-        pass
+    def gen_delete_sql(self, resourceItem: resourceItem) -> str:
+        tb = linksTable.useful_links
+        print(resourceItem.item_name)
+        print(resourceItem.resource_desc)
+        return tb.delete().where(tb.c.item_group == resourceItem.group). \
+            where(tb.c.item_name == resourceItem.item_name). \
+            where(tb.c.resource_description == resourceItem.resource_desc)
 
     def select_all(self):
         return self.conn.execute(select([linksTable.useful_links]))
 
-    def execute_ins(self, ins):
-        return self.conn.execute(ins)
-
-
-def adhoc_script_for_bulk_upload():
-    conn = dbConnection()
-    for item in adhoc.adhoc_data.ROWS:
-        ri = resourceItem(*item)
-        sql = conn.gen_insert_sql(ri)
-        rp = conn.execute_ins(sql)
-        print(sql)
-
-# adhoc_script_for_bulk_upload()
+    def execute_ins(self, sql: str) -> ResultProxy:
+        return self.conn.execute(sql)
