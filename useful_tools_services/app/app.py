@@ -4,12 +4,13 @@ from http import HTTPStatus
 
 import pandas as pd
 from flask import Flask, request, Response
+from flask_cors import CORS
 
 import connection as cn
 from connection import resourceItem
 
 app = Flask(__name__)
-
+cors = CORS(app, resources={r"*": {"origins": "*"}})
 
 @app.route("/")
 def hello():
@@ -30,7 +31,7 @@ def get_all_items() -> Response:
         items = []
         for item in df.loc[df['item_group'] == group].values:
             items.append({"Group": item[0], "Name": item[1],
-                          "Link": item[2], "Description": item[3]})
+                          "Links": item[2], "Description": item[3]})
         groups.append({"Group": group, "Items": items})
     return json.dumps({"Groups": groups})
 

@@ -86,8 +86,7 @@ class dbConnection():
         print(resourceItem.item_name)
         print(resourceItem.resource_desc)
         return tb.delete().where(tb.c.item_group == resourceItem.group). \
-            where(tb.c.item_name == resourceItem.item_name). \
-            where(tb.c.resource_description == resourceItem.resource_desc)
+            where(tb.c.item_name == resourceItem.item_name)
 
     def select_all(self):
         return self.conn.execute(select([linksTable.useful_links]))
