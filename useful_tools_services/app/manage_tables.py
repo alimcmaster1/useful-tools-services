@@ -9,7 +9,7 @@ def get_connection():
 
 
 def create_table() -> str:
-    create_sql = """CREATE TABLE useful_links( 
+    create_sql = """CREATE TABLE useful_links(
                  item_group VARCHAR(64) NOT NULL,
                  item_name VARCHAR(64) NOT NULL,
                  links TEXT [] NOT NULL,

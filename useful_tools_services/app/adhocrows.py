@@ -2,22 +2,28 @@ from useful_tools_services.app.connection import dbConnection, resourceItem
 
 
 class adhoc_data:
-
     ROWS = [
         ["Data manipulation in python", "Tom Augspurger",
-         ["https://tomaugspurger.github.io", "https://www.youtube.com/watch?v=7vuO9QXDN50"],
+         ["https://tomaugspurger.github.io",
+          "https://www.youtube.com/watch?v=7vuO9QXDN50"],
          "Pandas Head to tail & blog "],
 
         ["Data manipulation in python", "Numba",
          ["https://numba.pydata.org"],
          "Support compilation of Python on run on CPU/GPU"],
 
-        ["Data manipulation in python", "Natural Language Processing Google Cloud",
-         ["https://googlecloudplatform.github.io/google-cloud-python/latest/language/usage.html"],
-         "Google Natural Language API and other Google Cloud Client Libraries in python"],
+        ["Data manipulation in python",
+         "Natural Language Processing Google Cloud",
+         [
+             ("https://googlecloudplatform.github.io/"
+              "google-cloud-python/latest/language/usage.html")],
+         ("Google Natural Language API and other"
+          "Google Cloud Client Libraries in python")],
 
         ["Data manipulation in python", "Logistic Regression/TFIDF Kaggle.",
-         ["https://www.kaggle.com/sudhirnl7/logistic-regression-tfidf/notebook"],
+         [
+             ("https://www.kaggle.com/sudhirnl7/"
+              "logistic-regression-tfidf/notebook")],
          "Pandas Head to tail & blog"],
 
         ["Machine Learning", "Pytorch",
@@ -48,7 +54,7 @@ class adhoc_data:
         for item in adhoc_data.ROWS:
             ri = resourceItem(*item)
             sql = conn.gen_insert_sql(ri)
-            rp = conn.execute_ins(sql)
+            conn.execute_ins(sql)
             print(sql)
 
 

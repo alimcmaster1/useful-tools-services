@@ -13,3 +13,5 @@ if [ $? -ne "0" ]; then
 
 fi
 echo "MyPy Type checking COMPLETE"
+
+exit $RET

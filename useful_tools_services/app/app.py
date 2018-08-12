@@ -12,6 +12,7 @@ from connection import resourceItem
 app = Flask(__name__)
 cors = CORS(app, resources={r"*": {"origins": "*"}})
 
+
 @app.route("/")
 def hello():
     return "OK"
@@ -25,7 +26,7 @@ def get_all_items() -> Response:
 
     df = pd.DataFrame(data=dataset, columns=all_res.keys())
 
-    # Bucket by group server side so UI can avoid expensive data manipulation logic
+    # Bucket by item group
     groups = []
     for group in df.item_group.unique():
         items = []

@@ -1,12 +1,14 @@
 import os
 
-from sqlalchemy import Table, MetaData, String, Column, ARRAY, TEXT, create_engine, select
+from sqlalchemy import Table, MetaData, String, Column, ARRAY, TEXT, \
+    create_engine, select
 from sqlalchemy.engine import ResultProxy
 
 
 class resourceItem():
 
-    def __init__(self, group: str, item_name: str, links: str, resource_desc: str) -> None:
+    def __init__(self, group: str, item_name: str, links: str,
+                 resource_desc: str) -> None:
         self.group = group
         self.item_name = item_name
         self.links = links
@@ -75,10 +77,11 @@ class dbConnection():
         self.conn = self._engine.connect()
 
     def gen_insert_sql(self, resourceItem):
-        insert = linksTable.useful_links.insert().values(item_group=getattr(resourceItem, "group"),
-                                                         item_name=getattr(resourceItem, "item_name"),
-                                                         links=getattr(resourceItem, "links"),
-                                                         resource_description=getattr(resourceItem, "resource_desc"))
+        insert = linksTable.useful_links.insert().values(
+            item_group=getattr(resourceItem, "group"),
+            item_name=getattr(resourceItem, "item_name"),
+            links=getattr(resourceItem, "links"),
+            resource_description=getattr(resourceItem, "resource_desc"))
         return insert
 
     def gen_delete_sql(self, resourceItem: resourceItem) -> str:
