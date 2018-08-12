@@ -74,6 +74,7 @@ def create_resource_item(request: request) -> resourceItem:
                         request_body["links"],
                         request_body["resource_desc"])
 
+
 if __name__ == '__main__':
     # Heroku defines the port we must use in the "PORT" env variable
     port = int(os.environ.get("PORT", 8000))

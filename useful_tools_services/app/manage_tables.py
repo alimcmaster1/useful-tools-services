@@ -17,8 +17,8 @@ def create_table() -> str:
                  )"""
     return create_sql
 
-conn = None
 
+conn = None
 try:
     conn = get_connection()
     cur = conn.cursor()
