@@ -1,12 +1,14 @@
 import os
 
-from sqlalchemy import Table, MetaData, String, Column, ARRAY, TEXT, create_engine, select
+from sqlalchemy import Table, MetaData, String, Column, ARRAY, TEXT, \
+    create_engine, select
 from sqlalchemy.engine import ResultProxy
 
 
 class resourceItem():
 
-    def __init__(self, group: str, item_name: str, links: str, resource_desc: str) -> None:
+    def __init__(self, group: str, item_name: str, links: str,
+                 resource_desc: str) -> None:
         self.group = group
         self.item_name = item_name
         self.links = links
@@ -40,7 +42,7 @@ class resourceItem():
 
     @links.setter
     def links(self, value):
-        if value is not None:
+        if value is not None and len(value[0]) > 0:
             self._links = value
         else:
             raise ValueError("Links cannot be None")
@@ -75,22 +77,26 @@ class dbConnection():
         self.conn = self._engine.connect()
 
     def gen_insert_sql(self, resourceItem):
-        insert = linksTable.useful_links.insert().values(item_group=getattr(resourceItem, "group"),
-                                                         item_name=getattr(resourceItem, "item_name"),
-                                                         links=getattr(resourceItem, "links"),
-                                                         resource_description=getattr(resourceItem, "resource_desc"))
+        insert = linksTable.useful_links.insert().values(
+            item_group=getattr(resourceItem, "group"),
+            item_name=getattr(resourceItem, "item_name"),
+            links=getattr(resourceItem, "links"),
+            resource_description=getattr(resourceItem, "resource_desc"))
         return insert
 
     def gen_delete_sql(self, resourceItem: resourceItem) -> str:
         tb = linksTable.useful_links
         print(resourceItem.item_name)
         print(resourceItem.resource_desc)
-        return tb.delete().where(tb.c.item_group == resourceItem.group). \
-            where(tb.c.item_name == resourceItem.item_name). \
-            where(tb.c.resource_description == resourceItem.resource_desc)
+        return tb.delete().where(tb.columns.item_group == resourceItem.group). \
+            where(tb.columns.item_name == resourceItem.item_name)
 
     def select_all(self):
         return self.conn.execute(select([linksTable.useful_links]))
+
+    def get_distinct_webpages(self):
+        sql = select([linksTable.useful_links.columns.links]).distinct()
+        return self.conn.execute(sql)
 
     def execute_ins(self, sql: str) -> ResultProxy:
         return self.conn.execute(sql)
