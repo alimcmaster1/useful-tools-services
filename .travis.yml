@@ -9,6 +9,7 @@ install:
   - pip install flake8
 
 script:
-  - pytest
+  - tox
+  - codecov
   - ci/lint.sh
   - ci/mypy.sh

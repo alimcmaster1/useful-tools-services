@@ -3,3 +3,6 @@ Backend services for useful-tools site
 
 
 [Heroku postgres guide](https://devcenter.heroku.com/articles/heroku-postgresql)
+
+### Useful Commands
+- `python3 setup.py sdist bdist_wheel` Will generate a source arhive and a whl file. [Guide here](https://python-packaging-user-guide.readthedocs.io/tutorials/packaging-projects/)

@@ -10,13 +10,13 @@ from bs4 import BeautifulSoup
 from pymongo import MongoClient
 from pymongo.errors import DuplicateKeyError
 
-import connection as cn
+from app import connection as cn
 
 
 def get_site_links():
     conn = cn.dbConnection()
     return list(map(lambda item: item[0], list(itertools.chain(
-            *[row.values() for row in conn.get_distinct_webpages()]))))
+        *[row.values() for row in conn.get_distinct_webpages()]))))
 
 
 class DataExtractor:
@@ -26,7 +26,8 @@ class DataExtractor:
         self.http = urllib3.PoolManager()
         self.mongoClient = MongoInserter(os.getenv("MONGO_DB"),
                                          "tech_articles")
-        self.mongoClient.create_index("url")
+        if create_index:
+            self.mongoClient.create_index("url")
 
     def __iter__(self):
         return self
@@ -68,6 +69,7 @@ class MongoInserter:
             (field, pymongo.ASCENDING)], unique=True)
         logger.info("Index Info {}".format(str(col.index_information())))
 
+
 if __name__ == '__main__':
     logging.basicConfig(level=logging.DEBUG)
     logger = logging.getLogger(__name__)
@@ -79,5 +81,4 @@ if __name__ == '__main__':
         logger.info("All URLs processed and docs inserted into MongoDB")
         logger.info("Total number of docs in collection: {} is '{}'".format(
             de.mongoClient.collection.name, de.mongoClient.collection.count()))
-    print("")
     pass
