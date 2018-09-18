@@ -2,7 +2,7 @@ sudo: false
 language: python
 # cache package wheels (1 cache per python version)
 cache: pip
-`python:
+python:
   - "3.5"
   - "3.6"
   - "3.7"
