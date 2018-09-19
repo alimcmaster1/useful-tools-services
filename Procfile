@@ -1,1 +1,1 @@
-web: gunicorn app:main
+web: gunicorn useful_tools_services.app.main:app
